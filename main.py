@@ -22,7 +22,7 @@ if __name__ == '__main__':
                         help='Output PDF filepath')
     parser.add_argument("--prefix", "-p", type=str, default="",
                         help='Prefix to page number in filename')
-    parser.add_argument("--count", "-c", type=int, default="png",
+    parser.add_argument("--count", "-c", type=int, default=0,
                         help='Number of pdf files')
 
     args = parser.parse_args()
