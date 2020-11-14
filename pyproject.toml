@@ -24,6 +24,7 @@ pdf-combiner = 'console:main'
 [tool.poetry.dependencies]
 python = "^3.5"
 pypdf2 = "^1.26.0"
+tqdm = "^4.51.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.3.2"
