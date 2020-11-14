@@ -2,29 +2,25 @@ import argparse
 from pathlib import Path
 
 from PyPDF2 import PdfFileMerger, PdfFileReader
+from tqdm import tqdm
 
 
-def main(directory, prefix, count, outfile):
+def main(directory: Path, outfile: Path):
     m = PdfFileMerger()
 
-    for p in range(count):
-        m.append(PdfFileReader(
-            f'{directory}/{prefix}{p + 1}.pdf', 'rb'))
+    for path in tqdm(tuple(directory.rglob("*.pdf"))):
+        m.append(PdfFileReader(str(path), 'rb'))
 
-    m.write(outfile)
+    m.write(str(outfile))
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Compress images.')
-    parser.add_argument('directory', type=str,
+    parser.add_argument('directory', type=Path,
                         help='Directory containing PDFs')
-    parser.add_argument('outfile', type=str,
+    parser.add_argument('outfile', type=Path,
                         help='Output PDF filepath')
-    parser.add_argument("--prefix", "-p", type=str, default="",
-                        help='Prefix to page number in filename')
-    parser.add_argument("--count", "-c", type=int, default=0,
-                        help='Number of pdf files')
 
     args = parser.parse_args()
 
-    main(Path(args.directory), args.prefix, args.count, args.outfile)
+    main(args.directory, args.outfile)
